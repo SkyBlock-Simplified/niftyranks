@@ -16,7 +16,6 @@ public class NiftyRanks extends BukkitPlugin {
 
 	@Override
 	public void onEnable() {
-		//test
 		try {
 			this.getLog().console("Loading SQL Config");
 			(pluginConfig = new Config(this)).init();
