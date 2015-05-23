@@ -1,0 +1,31 @@
+name: ${project.name}
+version: ${project.version}
+website: ${project.url}
+author: ${author}
+
+main: ${project.groupId}.${project.artifactId}.${project.name}
+depend: [Vault, NiftyBukkit]
+softdepend: [PermissionsEx]
+
+commands:
+  rank:
+    description: Manage player rank
+    usage: /<command> [player] <rank> [server]
+
+permissions:
+  niftyranks.*:
+    description: Gives access to all plugin features and commands
+    children:
+      niftyranks.joinfullserver:
+        description: Allows you to join the server even when it is full
+      niftyranks.rank.*:
+        description: Allows you to access all rank commands
+        children:
+          niftyranks.rank:
+            description: Allows you to change player ranks
+          niftyranks.rank.import:
+            description: Allows you to import existing groups and users
+          niftyranks.rank.check:
+            description: Allows you to check the rank of a player
+          niftyranks.rank.list:
+            description: Allows you to list the ranks
