@@ -11,16 +11,16 @@ import net.netcoding.niftyranks.managers.PexOverride;
 
 public class NiftyRanks extends BukkitPlugin {
 
-	private static transient Config pluginConfig;
-	private static transient PexOverride pexOverride;
+	private static transient Config PLUGIN_CONFIG;
+	private static transient PexOverride PEX_OVERRIDE;
 
 	@Override
 	public void onEnable() {
 		try {
 			this.getLog().console("Loading SQL Config");
-			(pluginConfig = new Config(this)).init();
+			(PLUGIN_CONFIG = new Config(this)).init();
 
-			if (pluginConfig.getSQL() == null) {
+			if (PLUGIN_CONFIG.getSQL() == null) {
 				this.getLog().console("Incomplete MySQL Configuration!");
 				this.setEnabled(false);
 				return;
@@ -54,8 +54,8 @@ public class NiftyRanks extends BukkitPlugin {
 		this.getLog().console("Registering Listeners");
 		new Login(this);
 
-		if ((pexOverride = new PexOverride(this)).isEnabled() && pexOverride.getVersionUUID() != 0)
-			this.getLog().console("Warning, you are using an unsupported version of {0} ({1}). Currently, the only working UUID version is 1.23!", PexOverride.PACKAGE_NAME, pexOverride.getVersion());
+		if ((PEX_OVERRIDE = new PexOverride(this)).isEnabled() && PEX_OVERRIDE.getVersionUUID() != 0)
+			this.getLog().console("Warning, you are using an unsupported version of {0} ({1}). Currently, the only working UUID version is 1.23!", PexOverride.PACKAGE_NAME, PEX_OVERRIDE.getVersion());
 	}
 
 	@Override
@@ -65,11 +65,11 @@ public class NiftyRanks extends BukkitPlugin {
 	}
 
 	public final static PexOverride getPexOverride() {
-		return pexOverride;
+		return PEX_OVERRIDE;
 	}
 
 	public final static SQLWrapper getSQL() {
-		return pluginConfig.getSQL();
+		return PLUGIN_CONFIG.getSQL();
 	}
 
 	private boolean setupTables() {
