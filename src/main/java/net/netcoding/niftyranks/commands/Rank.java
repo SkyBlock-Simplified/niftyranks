@@ -1,14 +1,5 @@
 package net.netcoding.niftyranks.commands;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import net.netcoding.niftybukkit.NiftyBukkit;
 import net.netcoding.niftybukkit.minecraft.BukkitCommand;
 import net.netcoding.niftybukkit.mojang.BukkitMojangProfile;
@@ -20,11 +11,19 @@ import net.netcoding.niftycore.util.StringUtil;
 import net.netcoding.niftyranks.NiftyRanks;
 import net.netcoding.niftyranks.cache.Config;
 import net.netcoding.niftyranks.cache.UserRankData;
-
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class Rank extends BukkitCommand {
 
@@ -71,7 +70,7 @@ public class Rank extends BukkitCommand {
 					} else if ("users".equalsIgnoreCase(args[1])) {
 						for (OfflinePlayer oplayer : this.getPlugin().getServer().getOfflinePlayers()) {
 							String[] playerGroups = NiftyBukkit.getPermissions().getPlayerGroups(null, oplayer);
-							List<String> groupList = Arrays.asList(playerGroups);
+							List<String> groupList = ListUtil.notEmpty(playerGroups) ? Arrays.asList(playerGroups) : new ArrayList<String>();
 							Collections.reverse(groupList);
 							playerGroups = ListUtil.toArray(groupList, String.class);
 
@@ -196,7 +195,6 @@ public class Rank extends BukkitCommand {
 							this.getLog().message(sender, "{{0}} is a member of the following: {{1}}.", profile.getName(), StringUtil.implode(ChatColor.GRAY + ", " + ChatColor.RED, rankData.getRanks()));
 					} catch (ProfileNotFoundException pnfe) {
 						this.getLog().error(sender, "Unable to locate the profile of {{0}}!", user);
-						return;
 					}
 				} else
 					this.showUsage(sender);
