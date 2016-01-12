@@ -7,8 +7,12 @@
 	<parent>
 		<groupId>net.netcoding</groupId>
 		<artifactId>niftyparent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
+
+	<properties>
+		<skip-copy>false</skip-copy>
+	</properties>
 
 	<dependencies>
 		<dependency>
