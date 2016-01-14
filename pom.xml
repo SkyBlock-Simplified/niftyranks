@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>niftyranks</artifactId>
 	<name>NiftyRanks</name>
-	<version>1.2.4</version>
+	<version>1.2.5</version>
 
 	<parent>
 		<groupId>net.netcoding</groupId>
