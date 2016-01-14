@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +65,7 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 		if (fetch || !this.isOnlineLocally()) {
 			try {
 				this.updateRanks();
-			} catch (SQLException ex) { }
+			} catch (SQLException ignore) { }
 		}
 
 		return this.ranks;
@@ -104,7 +103,7 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 					found.get(server).add(result.getString("rank"));
 				}
 
-				if (found.size() == 0) found.put(getServerName(), Arrays.asList("default"));
+				if (found.isEmpty()) found.put(getServerName(), Collections.singletonList("default"));
 				return found;
 			}
 		}, profile.getUniqueId().toString(), "*", getServerName());
@@ -146,7 +145,7 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 				for (String group : uuidGroups)
 					NiftyBukkit.getPermissions().playerRemoveGroup((String)null, oPlayer, group);
 			}
-		} catch (Exception ex) { }
+		} catch (Exception ignore) { }
 
 		try {
 			String[] nameGroups = NiftyBukkit.getPermissions().getPlayerGroups((String)null, oPlayer.getName());
@@ -155,13 +154,13 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 				for (String group : nameGroups)
 					NiftyBukkit.getPermissions().playerRemoveGroup((String)null, oPlayer.getName(), group);
 			}
-		} catch (Exception ex) { }
+		} catch (Exception ignore) { }
 
 		if (NiftyBukkit.getPermissions().hasGroupSupport()) {
 			boolean notDefault = false;
 
 			for (String rank : this.getRanks()) {
-				if (!rank.equalsIgnoreCase("default")) {
+				if (!"default".equalsIgnoreCase(rank)) {
 					notDefault = true;
 					break;
 				}
