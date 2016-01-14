@@ -5,7 +5,7 @@ import net.netcoding.niftycore.database.factory.SQLWrapper;
 import net.netcoding.niftycore.util.StringUtil;
 import net.netcoding.niftyranks.cache.Config;
 import net.netcoding.niftyranks.commands.Rank;
-import net.netcoding.niftyranks.listeners.Login;
+import net.netcoding.niftyranks.listeners.Connections;
 import net.netcoding.niftyranks.listeners.Notifications;
 import net.netcoding.niftyranks.managers.PexOverride;
 
@@ -52,7 +52,7 @@ public class NiftyRanks extends BukkitPlugin {
 		new Rank(this);
 
 		this.getLog().console("Registering Listeners");
-		new Login(this);
+		new Connections(this);
 
 		if ((PEX_OVERRIDE = new PexOverride(this)).isEnabled() && PEX_OVERRIDE.getVersionUUID() != 0)
 			this.getLog().console("Warning, you are using an unsupported version of {0} ({1}). Currently, the only working UUID version is 1.23!", PexOverride.PACKAGE_NAME, PEX_OVERRIDE.getVersion());

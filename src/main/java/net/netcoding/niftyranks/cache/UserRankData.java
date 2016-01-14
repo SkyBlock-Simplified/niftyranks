@@ -1,15 +1,5 @@
 package net.netcoding.niftyranks.cache;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import net.netcoding.niftybukkit.NiftyBukkit;
 import net.netcoding.niftybukkit.mojang.BukkitMojangCache;
 import net.netcoding.niftybukkit.mojang.BukkitMojangProfile;
@@ -19,9 +9,18 @@ import net.netcoding.niftycore.util.ListUtil;
 import net.netcoding.niftycore.util.StringUtil;
 import net.netcoding.niftycore.util.concurrent.ConcurrentSet;
 import net.netcoding.niftyranks.NiftyRanks;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserRankData extends BukkitMojangCache {
 
@@ -126,6 +125,15 @@ public class UserRankData extends BukkitMojangCache {
 				return result.next();
 			}
 		}, rank);
+	}
+
+	public static void removeCache(BukkitMojangProfile profile) {
+		for (UserRankData data : CACHE) {
+			if (data.getProfile().equals(profile)) {
+				CACHE.remove(data);
+				break;
+			}
+		}
 	}
 
 	public void saveVaultRanks() {
