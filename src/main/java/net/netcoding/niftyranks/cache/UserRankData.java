@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UserRankData extends BukkitMojangCache {
+public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 
 	private static final transient ConcurrentSet<UserRankData> CACHE = new ConcurrentSet<>();
 	private ConcurrentHashMap<String, List<String>> ranks = new ConcurrentHashMap<>();
