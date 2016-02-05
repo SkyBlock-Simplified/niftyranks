@@ -37,7 +37,7 @@ public class Config extends SQLConfig<MySQL> {
 	@Override
 	public boolean update(ConfigSection section) throws InvalidConfigurationException {
 		if (section.has("mysql")) {
-			ConfigSection mysql = (ConfigSection)section.get("mysql");
+			ConfigSection mysql = section.get("mysql");
 			section.remove("mysql");
 			this.driver = "mysql";
 			this.hostname = mysql.get("host");
