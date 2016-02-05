@@ -39,17 +39,17 @@ public class Rank extends BukkitCommand {
 	}
 
 	@Override
-	public void onCommand(final CommandSender sender, String alias, String args[]) throws SQLException, Exception {
+	public void onCommand(final CommandSender sender, String alias, String args[]) throws Exception {
 		final String action = (Config.isLocked() && !args[0].matches("^add|remove|check|list$")) ? "" : args[0];
 
-		if (action.equalsIgnoreCase("import")) {
+		if ("import".equalsIgnoreCase(action)) {
 			if (this.hasPermissions(sender, "rank", "import")) {
 				if (args.length < 2) {
 					this.showUsage(sender);
 					return;
 				}
 
-				if (!NiftyBukkit.hasPermissions()) {
+				if (!NiftyBukkit.hasVault()) {
 					this.getLog().error(sender, "You have no vault plugin to import with!");
 					return;
 				}
@@ -62,7 +62,7 @@ public class Rank extends BukkitCommand {
 				try {
 					if ("groups".equalsIgnoreCase(args[1])) {
 						for (String group : NiftyBukkit.getPermissions().getGroups()) {
-							if (group.equalsIgnoreCase("default")) continue;
+							if ("default".equalsIgnoreCase(group)) continue;
 							NiftyRanks.getSQL().update(StringUtil.format("INSERT IGNORE INTO {0} (rank) VALUES (?);", Config.RANK_TABLE), group);
 						}
 
@@ -78,7 +78,7 @@ public class Rank extends BukkitCommand {
 								for (String group : playerGroups) {
 									boolean remove = false;
 
-									if (group.equalsIgnoreCase("default"))
+									if ("default".equalsIgnoreCase(group))
 										remove = true;
 									else {
 										if (NiftyRanks.getSQL().update(StringUtil.format("INSERT IGNORE INTO {0} (uuid, rank, server) VALUES (?, ?, ?);", Config.USER_TABLE), oplayer.getUniqueId(), group, "*"))
@@ -99,7 +99,7 @@ public class Rank extends BukkitCommand {
 				}
 			} else
 				this.getLog().error(sender, "You do not have permission to import existing players and groups");
-		} else if (action.equalsIgnoreCase("list")) {
+		} else if ("list".equalsIgnoreCase(action)) {
 			if (this.hasPermissions(sender, "rank", "list")) {
 				NiftyRanks.getSQL().queryAsync(StringUtil.format("SELECT * FROM {0};", Config.RANK_TABLE), new VoidResultCallback() {
 					@Override
@@ -137,9 +137,9 @@ public class Rank extends BukkitCommand {
 					return;
 				}
 
-				if (action.equalsIgnoreCase("add"))
+				if ("add".equalsIgnoreCase(action))
 					NiftyRanks.getSQL().updateAsync(StringUtil.format("INSERT INTO {0} (uuid, rank, server) VALUES (?, ?, ?);", Config.USER_TABLE), profile.getUniqueId(), rank, server);
-				else if (action.equalsIgnoreCase("remove")) {
+				else if ("remove".equalsIgnoreCase(action)) {
 					NiftyRanks.getSQL().updateAsync(StringUtil.format("DELETE FROM {0} WHERE uuid = ? AND rank = ? AND server = ?;", Config.USER_TABLE), profile.getUniqueId(), rank, server);
 					complete  = "no longer has the rank of";
 				}
@@ -151,12 +151,12 @@ public class Rank extends BukkitCommand {
 			if (args.length == 2) {
 				final String rank = args[1];
 
-				if (action.equalsIgnoreCase("delete") && rank.equalsIgnoreCase("default")) {
+				if ("delete".equalsIgnoreCase(action) && "default".equalsIgnoreCase(rank)) {
 					this.getLog().error(sender, "You cannot delete the default rank!");
 					return;
 				}
 
-				if (action.equalsIgnoreCase("create")) {
+				if ("create".equalsIgnoreCase(action)) {
 					try {
 						NiftyRanks.getSQL().update(StringUtil.format("INSERT INTO {0} (rank) VALUES (?);", Config.RANK_TABLE), rank);
 					} catch (SQLIntegrityConstraintViolationException ex) {
@@ -168,7 +168,7 @@ public class Rank extends BukkitCommand {
 				this.getLog().message(sender, "The rank {{0}} has been {1}d.", rank, action);
 			} else
 				this.showUsage(sender);
-		} else if (action.equalsIgnoreCase("check")) {
+		} else if ("check".equalsIgnoreCase(action)) {
 			if (this.hasPermissions(sender, "rank", "check")) {
 				if (args.length == 2) {
 					String user = args[1];
