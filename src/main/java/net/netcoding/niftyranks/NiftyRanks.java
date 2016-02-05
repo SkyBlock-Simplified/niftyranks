@@ -64,11 +64,11 @@ public class NiftyRanks extends BukkitPlugin {
 			getSQL().removeListeners();
 	}
 
-	public final static PexOverride getPexOverride() {
+	public static PexOverride getPexOverride() {
 		return PEX_OVERRIDE;
 	}
 
-	public final static SQLWrapper getSQL() {
+	public static SQLWrapper getSQL() {
 		return PLUGIN_CONFIG.getSQL();
 	}
 
