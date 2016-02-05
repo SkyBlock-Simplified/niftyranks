@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 
 	private static final transient ConcurrentSet<UserRankData> CACHE = new ConcurrentSet<>();
-	private ConcurrentHashMap<String, List<String>> ranks = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, List<String>> ranks = new ConcurrentHashMap<>();
 
 	public UserRankData(JavaPlugin plugin, BukkitMojangProfile profile) {
 		this(plugin, profile, true);
