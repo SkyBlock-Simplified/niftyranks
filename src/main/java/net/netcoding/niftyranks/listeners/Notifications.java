@@ -1,10 +1,5 @@
 package net.netcoding.niftyranks.listeners;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.UUID;
-
 import net.netcoding.niftybukkit.minecraft.BukkitHelper;
 import net.netcoding.niftycore.database.factory.callbacks.VoidResultCallback;
 import net.netcoding.niftycore.database.notifications.DatabaseListener;
@@ -13,8 +8,12 @@ import net.netcoding.niftycore.database.notifications.TriggerEvent;
 import net.netcoding.niftyranks.cache.Config;
 import net.netcoding.niftyranks.cache.UserRankData;
 import net.netcoding.niftyranks.events.RankChangeEvent;
-
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.UUID;
 
 public class Notifications extends BukkitHelper implements DatabaseListener {
 
@@ -28,7 +27,7 @@ public class Notifications extends BukkitHelper implements DatabaseListener {
 		String table = databaseNotification.getTable();
 
 		if (table.equals(Config.RANK_TABLE)) {
-			if (event.equals(TriggerEvent.DELETE)) {
+			if (event == TriggerEvent.DELETE) {
 				Map<String, Object> deletedData = databaseNotification.getDeletedData();
 				String rank = String.valueOf(deletedData.get("rank"));
 
@@ -38,7 +37,7 @@ public class Notifications extends BukkitHelper implements DatabaseListener {
 				}
 			}
 		} else if (table.equals(Config.USER_TABLE)) {
-			if (event.equals(TriggerEvent.DELETE)) {
+			if (event == TriggerEvent.DELETE) {
 				Map<String, Object> deletedData = databaseNotification.getDeletedData();
 				this.search(UUID.fromString((String)deletedData.get("uuid")));
 			} else {

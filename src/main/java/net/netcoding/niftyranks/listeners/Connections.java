@@ -23,7 +23,7 @@ public class Connections extends BukkitListener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		if (Result.KICK_FULL.equals(event.getResult()) && this.hasPermissions(event.getPlayer(), "joinfullserver"))
+		if (Result.KICK_FULL == event.getResult() && this.hasPermissions(event.getPlayer(), "joinfullserver"))
 			event.setResult(Result.ALLOWED);
 	}
 
