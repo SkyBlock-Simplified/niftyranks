@@ -135,6 +135,7 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void saveVaultRanks() {
 		OfflinePlayer oPlayer = this.getProfile().getOfflinePlayer();
 
@@ -143,7 +144,7 @@ public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 
 			if (ListUtil.notEmpty(uuidGroups)) {
 				for (String group : uuidGroups)
-					NiftyBukkit.getPermissions().playerRemoveGroup((String)null, oPlayer, group);
+					NiftyBukkit.getPermissions().playerRemoveGroup(null, oPlayer, group);
 			}
 		} catch (Exception ignore) { }
 
