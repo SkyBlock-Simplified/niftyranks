@@ -7,17 +7,18 @@
 	<parent>
 		<groupId>net.netcoding</groupId>
 		<artifactId>niftyparent</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3</version>
 	</parent>
 
 	<properties>
 		<skip-copy>false</skip-copy>
+		<minecraft.provider>bukkit</minecraft.provider>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
+			<artifactId>craftbukkit</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
