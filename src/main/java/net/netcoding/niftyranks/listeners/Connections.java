@@ -1,8 +1,8 @@
 package net.netcoding.niftyranks.listeners;
 
 import net.netcoding.niftybukkit.minecraft.BukkitListener;
-import net.netcoding.niftybukkit.minecraft.events.PlayerDisconnectEvent;
-import net.netcoding.niftybukkit.minecraft.events.PlayerPostLoginEvent;
+import net.netcoding.niftybukkit.minecraft.events.profile.ProfileQuitEvent;
+import net.netcoding.niftybukkit.minecraft.events.profile.ProfileJoinEvent;
 import net.netcoding.niftyranks.cache.UserRankData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,7 +17,7 @@ public class Connections extends BukkitListener {
 	}
 
 	@EventHandler
-	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
+	public void onProfileQuit(ProfileQuitEvent event) {
 		UserRankData.removeCache(event.getProfile());
 	}
 
@@ -28,7 +28,7 @@ public class Connections extends BukkitListener {
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void onPlayerPostLogin(PlayerPostLoginEvent event) {
+	public void onProfileJoin(ProfileJoinEvent event) {
 		UserRankData userData = new UserRankData(this.getPlugin(), event.getProfile());
 
 		try {
