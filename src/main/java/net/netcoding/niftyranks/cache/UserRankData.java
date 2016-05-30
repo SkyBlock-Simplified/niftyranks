@@ -7,6 +7,7 @@ import net.netcoding.niftycore.database.factory.callbacks.ResultCallback;
 import net.netcoding.niftycore.mojang.MojangProfile;
 import net.netcoding.niftycore.util.ListUtil;
 import net.netcoding.niftycore.util.StringUtil;
+import net.netcoding.niftycore.util.concurrent.ConcurrentMap;
 import net.netcoding.niftycore.util.concurrent.ConcurrentSet;
 import net.netcoding.niftyranks.NiftyRanks;
 import org.bukkit.OfflinePlayer;
@@ -19,12 +20,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class UserRankData extends BukkitMojangCache<BukkitMojangProfile> {
 
 	private static final transient ConcurrentSet<UserRankData> CACHE = new ConcurrentSet<>();
-	private final ConcurrentHashMap<String, List<String>> ranks = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, List<String>> ranks = new ConcurrentMap<>();
 
 	public UserRankData(JavaPlugin plugin, BukkitMojangProfile profile) {
 		this(plugin, profile, true);
