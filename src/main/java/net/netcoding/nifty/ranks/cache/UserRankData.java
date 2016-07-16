@@ -88,7 +88,7 @@ public class UserRankData extends MinecraftMojangCache<MinecraftMojangProfile> {
 
 	private static Map<String, List<String>> _getRanks(final MojangProfile profile) throws SQLException {
 		return NiftyRanks.getSQL().query(StringUtil.format("SELECT server, rank FROM {0} WHERE uuid = ? AND (server = ? OR server = ?) ORDER BY _submitted DESC;", Config.USER_TABLE), result -> {
-			HashMap<String, List<String>> found = new HashMap<>();
+			ConcurrentMap<String, List<String>> found = Concurrent.newMap();
 
 			while (result.next()) {
 				String server = result.getString("server");
