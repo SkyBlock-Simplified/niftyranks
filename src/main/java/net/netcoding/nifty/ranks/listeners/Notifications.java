@@ -1,23 +1,22 @@
-package net.netcoding.niftyranks.listeners;
+package net.netcoding.nifty.ranks.listeners;
 
-import net.netcoding.niftybukkit.minecraft.BukkitHelper;
-import net.netcoding.niftycore.database.factory.callbacks.VoidResultCallback;
-import net.netcoding.niftycore.database.notifications.DatabaseListener;
-import net.netcoding.niftycore.database.notifications.DatabaseNotification;
-import net.netcoding.niftycore.database.notifications.TriggerEvent;
-import net.netcoding.niftyranks.cache.Config;
-import net.netcoding.niftyranks.cache.UserRankData;
-import net.netcoding.niftyranks.events.RankChangeEvent;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.netcoding.nifty.common.Nifty;
+import net.netcoding.nifty.common.api.plugin.MinecraftHelper;
+import net.netcoding.nifty.common.api.plugin.MinecraftPlugin;
+import net.netcoding.nifty.core.database.notifications.DatabaseListener;
+import net.netcoding.nifty.core.database.notifications.DatabaseNotification;
+import net.netcoding.nifty.core.database.notifications.TriggerEvent;
+import net.netcoding.nifty.ranks.cache.Config;
+import net.netcoding.nifty.ranks.cache.UserRankData;
+import net.netcoding.nifty.ranks.events.PlayerRankChangeEvent;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
 
-public class Notifications extends BukkitHelper implements DatabaseListener {
+public class Notifications extends MinecraftHelper implements DatabaseListener {
 
-	public Notifications(JavaPlugin plugin) {
+	public Notifications(MinecraftPlugin plugin) {
 		super(plugin);
 	}
 
@@ -41,12 +40,9 @@ public class Notifications extends BukkitHelper implements DatabaseListener {
 				Map<String, Object> deletedData = databaseNotification.getDeletedData();
 				this.search(UUID.fromString((String)deletedData.get("uuid")));
 			} else {
-				databaseNotification.getUpdatedRow(new VoidResultCallback() {
-					@Override
-					public void handle(ResultSet result) throws SQLException {
-						if (result.next())
-							search(UUID.fromString(result.getString("uuid")));
-					}
+				databaseNotification.getUpdatedRow(result -> {
+					if (result.next())
+						search(UUID.fromString(result.getString("uuid")));
 				});
 			}
 
@@ -58,7 +54,7 @@ public class Notifications extends BukkitHelper implements DatabaseListener {
 			if (rankData.getProfile().getUniqueId().equals(uniqueId)) {
 				rankData.updateRanks();
 				rankData.saveVaultRanks();
-				this.getPlugin().getServer().getPluginManager().callEvent(new RankChangeEvent(rankData));
+				Nifty.getPluginManager().call(new PlayerRankChangeEvent(rankData));
 				break;
 			}
 		}

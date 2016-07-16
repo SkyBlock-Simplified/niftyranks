@@ -1,18 +1,17 @@
-package net.netcoding.niftyranks;
+package net.netcoding.nifty.ranks;
 
-import net.netcoding.niftybukkit.minecraft.BukkitPlugin;
-import net.netcoding.niftycore.database.factory.SQLWrapper;
-import net.netcoding.niftycore.util.StringUtil;
-import net.netcoding.niftyranks.cache.Config;
-import net.netcoding.niftyranks.commands.Rank;
-import net.netcoding.niftyranks.listeners.Connections;
-import net.netcoding.niftyranks.listeners.Notifications;
-import net.netcoding.niftyranks.managers.PexOverride;
+import net.netcoding.nifty.common.api.plugin.MinecraftPlugin;
 
-public class NiftyRanks extends BukkitPlugin {
+import net.netcoding.nifty.core.database.factory.SQLWrapper;
+import net.netcoding.nifty.core.util.StringUtil;
+import net.netcoding.nifty.ranks.cache.Config;
+import net.netcoding.nifty.ranks.commands.Rank;
+import net.netcoding.nifty.ranks.listeners.Connections;
+import net.netcoding.nifty.ranks.listeners.Notifications;
+
+public class NiftyRanks extends MinecraftPlugin {
 
 	private static transient Config PLUGIN_CONFIG;
-	private static transient PexOverride PEX_OVERRIDE;
 
 	@Override
 	public void onEnable() {
@@ -53,19 +52,12 @@ public class NiftyRanks extends BukkitPlugin {
 
 		this.getLog().console("Registering Listeners");
 		new Connections(this);
-
-		if ((PEX_OVERRIDE = new PexOverride(this)).isEnabled() && PEX_OVERRIDE.getVersionUUID() != 0)
-			this.getLog().console("Warning, you are using an unsupported version of {0} ({1}). Currently, the only working UUID version is 1.23!", PexOverride.PACKAGE_NAME, PEX_OVERRIDE.getVersion());
 	}
 
 	@Override
 	public void onDisable() {
 		if (getSQL() != null)
 			getSQL().removeListeners();
-	}
-
-	public static PexOverride getPexOverride() {
-		return PEX_OVERRIDE;
 	}
 
 	public static SQLWrapper getSQL() {

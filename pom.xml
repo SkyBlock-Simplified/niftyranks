@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.netcoding.nifty</groupId>
-			<artifactId>library</artifactId>
+			<artifactId>common</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

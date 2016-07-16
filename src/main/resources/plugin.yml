@@ -1,10 +1,10 @@
-name: ${project.name}
+name: Nifty${project.name}
 version: ${project.version}
 website: ${project.url}
 author: ${author}
 
-main: ${project.groupId}.${project.artifactId}.${project.name}
-depend: [Vault, NiftyBukkit]
+main: ${project.groupId}.${project.artifactId}.Nifty${project.name}
+depend: [NiftyLibrary, Vault]
 softdepend: [PermissionsEx]
 
 commands:

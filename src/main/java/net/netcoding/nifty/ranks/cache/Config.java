@@ -1,11 +1,11 @@
-package net.netcoding.niftyranks.cache;
+package net.netcoding.nifty.ranks.cache;
 
-import net.netcoding.niftybukkit.NiftyBukkit;
-import net.netcoding.niftybukkit.yaml.BukkitSQLConfig;
-import net.netcoding.niftycore.database.MySQL;
-import net.netcoding.niftycore.yaml.ConfigSection;
-import net.netcoding.niftycore.yaml.exceptions.InvalidConfigurationException;
-import org.bukkit.plugin.java.JavaPlugin;
+import net.netcoding.nifty.common.Nifty;
+import net.netcoding.nifty.common.api.plugin.MinecraftPlugin;
+import net.netcoding.nifty.common.yaml.BukkitSQLConfig;
+import net.netcoding.nifty.core.database.MySQL;
+import net.netcoding.nifty.core.yaml.ConfigSection;
+import net.netcoding.nifty.core.yaml.exceptions.InvalidConfigurationException;
 
 public class Config extends BukkitSQLConfig<MySQL> {
 
@@ -14,14 +14,14 @@ public class Config extends BukkitSQLConfig<MySQL> {
 	public static final String USER_TABLE = TABLE_PREFIX + "users";
 	private static final Boolean SERVER_LOCKED = false;
 
-	public Config(JavaPlugin plugin) {
+	public Config(MinecraftPlugin plugin) {
 		super(plugin.getDataFolder(), "config");
 	}
 
 	public static String getServerNameFromArgs(String[] args, boolean check) {
-		if (NiftyBukkit.getBungeeHelper().isDetected()) {
+		if (Nifty.getBungeeHelper().getDetails().isDetected()) {
 			if (check) {
-				if (NiftyBukkit.getBungeeHelper().getServer(args[args.length - 1]) != null)
+				if (Nifty.getBungeeHelper().getServer(args[args.length - 1]) != null)
 					return args[args.length - 1];
 			}
 		}
@@ -30,7 +30,7 @@ public class Config extends BukkitSQLConfig<MySQL> {
 	}
 
 	public static boolean isLocked() {
-		return NiftyBukkit.getBungeeHelper().isDetected() ? SERVER_LOCKED : false;
+		return Nifty.getBungeeHelper().getDetails().isDetected() ? SERVER_LOCKED : false;
 	}
 
 	@Override
